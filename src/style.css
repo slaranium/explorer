@@ -1,54 +1,105 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  height: 100%;
+/* =========================================================
+   1. GLOBAL PRIMARY HIJACK (Bunuh Hijau dari Akarnya)
+   ========================================================= */
+:root, html, [data-theme='dark'], .dark {
+  --primary: 14 165 233 !important; /* Biru RGB */
+  --primary-color: #0ea5e9 !important;
+  --v-primary-base: #0ea5e9 !important;
 }
 
+html, body { height: 100%; }
 body {
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', sans-serif;
-  font-size: 15px;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Inter, sans-serif;
+  background-color: #0f172a;
 }
 
-:root {
-  --text-main: #333;
-  --text-secondary: #4b525d;
-  --bg-active: #fbfbfc;
+/* =========================================================
+   2. FIX TOMBOL DELEGATE & BADGE (Anti-Hijau)
+   ========================================================= */
+/* Target langsung .btn-primary & .bg-primary sesuai Inspect Element kamu */
+.btn-primary, 
+.btn,
+.bg-primary,
+.bg-green-500,
+label.btn-primary,
+.router-link-active:not(:first-of-type) {
+    background-color: #0ea5e9 !important; /* Biru Dashboard */
+    background: #0ea5e9 !important;
+    border-color: #0ea5e9 !important;
+    color: #ffffff !important;
+    --tw-bg-opacity: 1 !important;
+    box-shadow: none !important;
 }
 
-html.dark,
-html[data-theme='dark'] {
-  --text-main: #f7f7f7;
-  --text-secondary: #6f6e84;
-  --bg-active: #242b40;
+/* Efek Hover tombol agar tidak balik jadi hijau */
+.btn-primary:hover, .btn:hover {
+    background-color: #0284c7 !important;
+    border-color: #0284c7 !important;
 }
 
-.table th:first-child {
-  position: relative;
-  z-index: 2;
+/* =========================================================
+   3. STAKING TABLE (Nama Ungu & Teks Biru)
+   ========================================================= */
+/* Nama Validator: Paksa Ungu Cerah */
+tbody tr td a, 
+tbody tr td a span,
+.text-primary.dark\:invert,
+.font-weight-medium {
+    color: #a78bfa !important;
+    font-weight: 700 !important;
+    filter: none !important; /* Matikan efek invert dark mode */
 }
 
-.slide-up-enter-active,
-.slide-up-leave-active {
-  transition: all 0.25s ease-out;
+/* Teks Status / Angka Kecil / Teks Hijau lainnya jadi Biru */
+.text-green-500,
+.text-success,
+span[class*="text-green"],
+.text-primary:not(tbody tr td a span) {
+    color: #38bdf8 !important; 
 }
 
-.slide-up-enter-from {
-  opacity: 0;
-  transform: translateY(calc(80%));
+/* =========================================================
+   4. LOGO PROTECTION
+   ========================================================= */
+aside a:first-of-type,
+aside a.router-link-active:first-of-type {
+    background-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
 
-.slide-up-leave-to {
-  opacity: 0;
-  transform: translateY(-calc(15%));
+/* Reset Rank & Baris Tabel */
+tbody tr td:first-child span { color: #ffffff !important; }
+tbody tr { background-color: transparent !important; }
+
+/* =========================================================
+   5. FIX TOP ICONS (Bahasa, DarkMode, Search)
+   ========================================================= */
+/* Paksa ikon-ikon di top bar agar berwarna putih terang */
+.v-toolbar__content .v-btn.v-btn--icon,
+header .v-btn--icon i,
+header .v-btn--icon svg,
+header [class*="text-gray-"],
+.v-app-bar [class*="text-gray-"] {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* Khusus untuk SVG path yang kamu tunjukkan di screenshot */
+header svg path, 
+header .iconify {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+}
+
+/* Tambahkan sedikit efek hover agar tetap interaktif */
+header .v-btn--icon:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
 }

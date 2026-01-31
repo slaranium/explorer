@@ -1,127 +1,108 @@
-<script lang="ts" setup>
-import { Icon } from '@iconify/vue';
-import { useDashboard, LoadingStatus } from '@/stores';
-import type { ChainConfig } from '@/types/chaindata';
-import ChainSummary from '@/components/ChainSummary.vue';
-import AdBanner from '@/components/ad/AdBanner.vue';
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useBaseStore } from '../stores/useBaseStore';
 
-import { computed, onMounted, ref } from 'vue';
-import { useBlockchain } from '@/stores';
+// Init Store
+const baseStore = useBaseStore();
+const { chains, config, testnets } = storeToRefs(baseStore) as any;
 
-const dashboard = useDashboard();
+const keyword = ref('');
 
-const keywords = ref('');
-const chains = computed(() => {
-  if (keywords.value) {
-    const lowercaseKeywords = keywords.value.toLowerCase();
+// --- UPDATE: DAFTAR MANUAL DENGAN SYMBOL MASING-MASING ---
+const manualChains = [
+  { id: 'republic-testnet',   logo: '/logos/republic.jpg', symbol: 'RAI' }, 
+  { id: 'safrochain-testnet', logo: '/logos/safro.jpg',    symbol: 'SAF' }, 
+  { id: 'lumen',              logo: '/logos/lumen.png',    symbol: 'LMN' },
+  { id: 'osmosis',            logo: '/logos/osmo.jpg',  symbol: 'OSMO' }
+]; 
 
-    return Object.values(dashboard.chains).filter(
-      (x: ChainConfig) =>
-        x.chainName.toLowerCase().indexOf(lowercaseKeywords) > -1 ||
-        x.prettyName.toLowerCase().indexOf(lowercaseKeywords) > -1
-    );
-  } else {
-    return Object.values(dashboard.chains);
+const showNames = computed(() => {
+  // 1. Ambil data otomatis dari store
+  let list = chains?.value || config?.value?.chains || testnets?.value || [];
+  if (!Array.isArray(list)) list = [];
+
+  // 2. Gabungkan/Prioritaskan data manual agar logo dan symbol sesuai
+  if (list.length === 0 || manualChains.length > 0) {
+      const manualList = manualChains.map(item => ({
+          chain_name: item.id,
+          name: item.id, 
+          logo: item.logo,
+          symbol: item.symbol // <-- SEKARANG SYMBOL TERDAFTAR
+      }));
+      
+      list = manualList;
   }
+
+  // 3. Filter Search
+  if(keyword.value) {
+      return list.filter((chain: any) => {
+          const name = chain.chain_name || chain.name || '';
+          return name.toLowerCase().includes(keyword.value.toLowerCase());
+      });
+  }
+  
+  return list;
 });
 
-const featured = computed(() => {
-  const names = ['cosmos', 'osmosis', 'akash', 'celestia', 'evmos', 'injective', 'dydx', 'noble'];
-  return chains.value
-    .filter((x) => names.includes(x.chainName))
-    .sort((a, b) => names.indexOf(a.chainName) - names.indexOf(b.chainName));
-});
-
-const chainStore = useBlockchain();
+const handleImageError = (e: Event) => {
+  (e.target as HTMLImageElement).src = '/favicon.ico';
+};
 </script>
+
 <template>
-  <div class="">
-    <div
-      class="flex md:!flex-row flex-col items-center justify-center mb-6 mt-14 gap-2"
-    >
-      <div class="w-16 rounded-full">
-        <svg
-          version="1.0"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 150.000000 132.000000"
-          preserveAspectRatio="xMidYMid meet"
-        >
-          <g
-            transform="translate(0.000000,132.000000) scale(0.100000,-0.100000)"
-            :fill="chainStore.current?.themeColor || '#666CFF'"
-            class="dark:invert"
-            stroke="none"
-          >
-            <path
-              d="M500 1310 l-125 -5 -182 -315 c-100 -173 -182 -321 -182 -329 -1 -7
-            81 -159 181 -337 l183 -324 372 0 371 0 186 325 c102 179 186 330 186 337 0 7
-            -82 157 -182 335 l-183 323 -250 -2 c-137 -1 -306 -5 -375 -8z m588 -454 c61
-            -106 112 -197 112 -201 0 -4 -50 -95 -111 -201 l-112 -194 -231 0 -231 0 -105
-            181 c-58 100 -109 190 -114 200 -6 14 17 63 104 213 l112 196 232 0 231 0 113
-            -194z"
-            />
-            <path
-              d="M591 1001 l-54 -6 -87 -150 -88 -150 176 -3 c97 -1 181 -1 187 2 9 3
-            165 267 183 308 4 9 -233 7 -317 -1z"
-            />
-            <path
-              d="M872 824 l-90 -159 36 -66 c113 -201 147 -258 153 -251 8 8 179 302
-            179 307 0 2 -37 68 -83 147 -46 78 -88 151 -94 162 -9 16 -24 -5 -101 -140z"
-            />
-            <path
-              d="M360 625 c0 -7 148 -263 172 -297 l19 -28 186 0 c101 0 183 3 181 8
-            -1 4 -43 78 -93 165 l-90 157 -187 0 c-104 0 -188 -2 -188 -5z"
-            />
-          </g>
-        </svg>
-      </div>
-      <h1 class="text-primary dark:invert text-3xl md:!text-6xl font-bold">
-        {{ $t('pages.title') }}
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white sm:text-5xl sm:tracking-tight lg:text-6xl mb-4">
+        StringLabs <span class="text-blue-600">Explorer</span>
       </h1>
-    </div>
-    <div class="text-center text-base">
-      <p class="mb-1">
-        {{ $t('pages.slogan') }}
+      <p class="max-w-xl mx-auto text-xl text-gray-500 dark:text-gray-400">
+        Search and explore cosmos blockchain networks.
       </p>
     </div>
-    <div v-if="dashboard.status !== LoadingStatus.Loaded" class="flex justify-center">
-      <progress class="progress progress-info w-80 h-1"></progress>
+
+    <div class="max-w-xl mx-auto mb-16">
+      <div class="relative rounded-md shadow-sm">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <i class='bx bx-search text-gray-400 text-xl'></i>
+        </div>
+        <input 
+          v-model="keyword" 
+          type="text" 
+          class="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-md py-4 shadow-sm" 
+          placeholder="Search chains..." 
+        />
+      </div>
     </div>
 
-    <div v-if="featured.length > 0" class="text-center text-base mt-6 text-primary">
-      <h2 class="mb-6">Featured Blockchains 🔥</h2>
-    </div>
-
-    <div
-      v-if="featured.length > 0"
-      class="grid grid-cols-1 gap-4 mt-6 md:!grid-cols-3 lg:!grid-cols-4 2xl:!grid-cols-5"
-    >
-      <ChainSummary v-for="(chain, index) in featured" :key="index" :name="chain.chainName" />
-    </div>
-
-    <div class="text-center text-base mt-6 text-primary">
-      <h2 class="mb-6">{{ $t('pages.description') }}</h2>
-    </div>
-
-    <div class="flex items-center rounded-lg bg-base-100 border border-gray-200 dark:border-gray-700 mt-10">
-      <Icon icon="mdi:magnify" class="text-2xl text-gray-400 ml-3" />
-      <input
-        :placeholder="$t('pages.search_placeholder')"
-        class="px-4 h-10 bg-transparent flex-1 outline-none text-base"
-        v-model="keywords"
-      />
-      <div class="px-4 text-base hidden md:!block">{{ chains.length }}/{{ dashboard.length }}</div>
-    </div>
-
-    <div class="grid grid-cols-1 gap-4 mt-6 md:!grid-cols-3 lg:!grid-cols-4 2xl:!grid-cols-5">
-      <ChainSummary v-for="(chain, index) in chains" :key="index" :name="chain.chainName" />
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div 
+        v-for="chain in showNames" 
+        :key="chain.chain_name || chain.name" 
+        class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow duration-200 border border-transparent hover:border-blue-500/30"
+      >
+        <a :href="`/${chain.chain_name || chain.name}`" class="block px-6 py-6">
+          <div class="flex items-center">
+            <div class="flex-shrink-0 h-12 w-12">
+              <img 
+                class="h-12 w-12 rounded-full bg-gray-100 dark:bg-gray-700 p-1 object-contain" 
+                :src="chain.logo" 
+                @error="handleImageError"
+                alt="" 
+              />
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg leading-6 font-bold text-gray-900 dark:text-white capitalize">
+                {{ (chain.chain_name || chain.name).replace(/-/g, ' ') }}
+              </h3>
+              <p class="mt-1 text-sm text-blue-400 font-bold font-mono">
+                {{ chain.symbol || 'TOKEN' }}
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-.logo path {
-  fill: #171d30;
-}
-</style>
-@/components/ad/ad
