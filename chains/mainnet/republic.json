@@ -11,13 +11,13 @@
     "coin_type": "60",
     "min_tx_fee": "1000",
     "addr_prefix": "rai",
-    "logo": "/logos/republic.jpg",
+    "logo": "https://explorer.stringlabs.site/logos/republic.jpg",
     "theme_color": "#099c04",
     "assets": [{
         "base": "arai",
         "symbol": "RAI",
         "exponent": "18",
         "coingecko_id": "", 
-        "logo": "/logos/republic.jpg"
+        "logo": "https://explorer.stringlabs.site/logos/republic.jpg"
     }]
 }
