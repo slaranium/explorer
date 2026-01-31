@@ -18,13 +18,13 @@
     "coin_type": "118",
     "min_tx_fee": "1000",
     "addr_prefix": "lmn",
-    "logo": "http://localhost:5173/logos/lumen.png",
+    "logo": "/logos/lumen.png",
     "theme_color": "#e00b0b",
     "assets": [{
         "base": "ulmn",
         "symbol": "LMN",
         "exponent": "6",
         "coingecko_id": "", 
-        "logo": "http://localhost:5173/logos/lumen.png"
+        "logo": "/logos/lumen.png"
     }]
 }
