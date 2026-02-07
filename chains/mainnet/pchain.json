@@ -18,7 +18,7 @@
 "coin_type": "60",
 "min_tx_fee": "1000",
 "addr_prefix": "push",
-"logo": "/logos/pchain.png",
+"logo": "/logos/pchain.jpg",
 "theme_color": "#099c04",
 "assets": [{
 "base": "upc",
