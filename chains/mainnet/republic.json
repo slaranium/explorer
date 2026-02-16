@@ -2,13 +2,21 @@
     "chain_name": "republic-testnet",
     "registry_name": "republic-testnet",
     "api": [
-        {"provider": "Vinjan.Inc", "address": "https://api-t.republic.vinjan-inc.com"}
+        {
+            "provider": "StringLabs",
+            "address": "https://api-republic.stringlabs.site"
+        }
     ],
     "rpc": [
-        {"provider": "Vinjan.Inc", "address": "https://rpc-t.republic.vinjan-inc.com"} 
+        {
+            "provider": "StringLabs",
+            "address": "https://rpc-republic.stringlabs.site"
+        }
     ],
     "sdk_version": "v0.53.5-0.20251030204916-768cb210885c",
     "coin_type": "60",
+    "key_alg": "ethsecp256k1",
+    "address_type": "ethermint",
     "min_tx_fee": "1000",
     "addr_prefix": "rai",
     "logo": "https://explorer.stringlabs.site/logos/republic.jpg",
@@ -17,7 +25,7 @@
         "base": "arai",
         "symbol": "RAI",
         "exponent": "18",
-        "coingecko_id": "", 
+        "coingecko_id": "republic", 
         "logo": "https://explorer.stringlabs.site/logos/republic.jpg"
     }]
 }
