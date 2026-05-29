@@ -8,7 +8,7 @@
         
     ],
     "rpc": [
-        {"provider": "Sunima", "address": "https://sunima.uk/chain-rpc/"} 
+        {"provider": "Sunima", "address": "https://rpc-t.sunima.vinjan-inc.com"} 
 
         
     ],
