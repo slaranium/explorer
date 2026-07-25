@@ -12,6 +12,7 @@ const keyword = ref('');
 // --- UPDATE: DAFTAR MANUAL DENGAN SYMBOL MASING-MASING ---
 const manualChains = [
   { id: 'sunima-testnet',   logo: '/logos/sunima.png', symbol: 'SUNA' },
+  { id: 'nexarail',         logo: '/logos/nxrl.png', symbol: 'NXRL' },
   { id: 'republic-testnet',   logo: '/logos/republic.jpg', symbol: 'RAI' },
   { id: 'pushchain-testnet',   logo: '/logos/pchain.jpg', symbol: 'PC' },
   { id: 'safrochain-testnet', logo: '/logos/safro.jpg',    symbol: 'SAF' }, 
