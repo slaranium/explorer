@@ -19,7 +19,7 @@
     "coin_type": "60",
     "min_tx_fee": "1000",
     "addr_prefix": "cosmos",
-    "logo": "/logos/limonata.png",
+    "logo": "/logos/limonata.jpg",
     "theme_color": "#099c04",
     "evm": "true",
     "assets": [{
