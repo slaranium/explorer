@@ -15,7 +15,7 @@ const manualChains = [
   { id: 'republic-testnet',   logo: '/logos/republic.jpg', symbol: 'RAI' },
   { id: 'pushchain-testnet',   logo: '/logos/pchain.jpg', symbol: 'PC' },
   { id: 'safrochain-testnet', logo: '/logos/safro.jpg',    symbol: 'SAF' }, 
-  { id: 'Limonata-testnet',   logo: '/logos/limonata.jpg', symbol: 'LIMO' },
+  { id: 'limonata-testnet',   logo: '/logos/limonata.jpg', symbol: 'LIMO' },
   { id: 'lumen',              logo: '/logos/lumen.png',    symbol: 'LMN' },
   { id: 'osmosis',            logo: '/logos/osmo.jpg',  symbol: 'OSMO' }
 ]; 
